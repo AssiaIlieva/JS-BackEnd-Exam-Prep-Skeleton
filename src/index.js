@@ -2,10 +2,12 @@ const express = require('express');
 const routes = require('./routes');
 
 const configExpress = require('./config/configExpress');
+const configHandlebars = require('./config/configHandlebars');
 
 const app = express();
 
-configExpress(app)
+configExpress(app);
+configHandlebars(app);
 
 app.use(routes)
 

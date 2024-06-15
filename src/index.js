@@ -4,12 +4,11 @@ const routes = require('./routes');
 
 const configExpress = require('./config/configExpress');
 const configHandlebars = require('./config/configHandlebars');
-const {authMiddleware} = require('./middlewares/authMiddlware');
+
 
 const app = express();
 
 configExpress(app);
-app.use(authMiddleware);
 configHandlebars(app);
 
 app.use(routes)

@@ -5,6 +5,7 @@ router.get('/', (req, res) => {
     res.render('home')
 });
 
+// TODO: Delete this
 router.get('/authorize-test', isAuth, (req, res) => {
     console.log(req.user);
     res.send('Your are authorized');

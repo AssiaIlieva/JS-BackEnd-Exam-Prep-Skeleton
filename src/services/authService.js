@@ -13,7 +13,9 @@ exports.register = async (userData) => {
     if(user){
         throw new Error('User already exists')
     }
-    return User.create(userData);
+    const createdUser =  User.create(userData);
+    const token = await generateToken(createdUser);
+    return token
 } 
 
 exports.login = async (email, password) => {
@@ -28,12 +30,17 @@ exports.login = async (email, password) => {
         throw new Error('Invalid password')
     }
     // Generate token - check which properties are needed - names
+   
+    const token = await generateToken(user);
+    // Return token
+    return token;
+};
+
+function generateToken (user){
     const payload = {
         _id: user._id,
         username: user.username,
         email: user.email,
     }
-    const token = await jwt.sign(payload, SECRET, {expiresIn: '2h'});
-    // Return token
-    return token;
+    return jwt.sign(payload, SECRET, {expiresIn: '2h'});
 }

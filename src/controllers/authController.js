@@ -8,12 +8,19 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async(req, res) => {
     const userData = req.body;
-    if(req.body.password !== req.body.rePassword){
-       const message = `Password and Confirm Password doesn\'t match`;
-       res.render('auth/register', {...userData, error: message}) 
-    }
     await authService.register(userData); 
+    // await authService.login(userData.email, userData.password)
     res.redirect('/auth/login');
+});
+
+router.get('/login', (req, res) => {
+    res.render('auth/login')
+});
+
+router.post('/login', async (req, res) => {
+    const {email, password} = req.body;
+
+    await authService.login(email, password)
 })
 
 module.exports = router;

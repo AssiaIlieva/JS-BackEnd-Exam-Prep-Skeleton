@@ -1,5 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('../lib/jsonwebtoken');
+const SECRET = 'ACDC4kiss3Quinn00GynsAndRoses44Scorpions'
 
 exports.register = async (userData) => {
     // Check if password and rePassowrd match
@@ -7,7 +9,7 @@ exports.register = async (userData) => {
         throw new Error('Password missmatch')
     };
     // Check if the user already exists
-    const user = await User.find({email: userData.email});
+    const user = await User.findOne({email: userData.email});
     if(user){
         throw new Error('User already exists')
     }
@@ -25,8 +27,13 @@ exports.login = async (email, password) => {
     if(!isValid){
         throw new Error('Invalid password')
     }
-
-    // Generate token
-
+    // Generate token - check which properties are needed - names
+    const payload = {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+    }
+    const token = await jwt.sign(payload, SECRET, {expiresIn: '2h'});
     // Return token
+    return token;
 }

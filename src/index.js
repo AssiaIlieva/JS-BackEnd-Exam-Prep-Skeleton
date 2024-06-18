@@ -21,6 +21,6 @@ mongoose.connection.on('disconnected', () => console.log('DB is disconnected'));
 mongoose.connection.on('error', (err) => console.log('err'));
 
 
-app.listen(5000, () => {
-    console.log('App is listening on http://localhost:5000');
+app.listen(3000, () => {
+    console.log('App is listening on http://localhost:3000');
 })
